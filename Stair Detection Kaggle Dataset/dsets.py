@@ -257,7 +257,7 @@ class TrafficLightDataset(Dataset):
 
         
 
-        image=cv.cvtColor(image, cv.COLOR_BGR2RGB).astype('float32')/255.0
+        image=cv.cvtColor(image, cv.COLOR_BGR2RGB).astype('float32')
 
         if self.mode =="train" or self.mode =="val":
             annotation= self.annotation_dict[image_name]
