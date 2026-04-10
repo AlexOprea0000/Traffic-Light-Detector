@@ -164,18 +164,18 @@ class TrainingApp:
 
        train_size= int(0.8 * len(dataset))
        val_size= len(dataset) - train_size
+       train_indices= indices[:train_size]
+       val_indices= indices[train_size:]
 
-       train_subset, val_subset= random_split(dataset, [train_size, val_size])
+       train_dataset=torch.utils.data.Subset(dataset, train_indices)
+       val_dataset=torch.utils.data.Subset(dataset, val_indices)
         
        
        batch_size = self.cli_args.batch_size
        if self.use_cuda:
             batch_size *= torch.cuda.device_count()
 
-       train_dataset= copy.deepcopy(train_subset)
-       val_dataset= copy.deepcopy(val_subset)
-       train_dataset.dataset = copy.deepcopy(train_subset.dataset)
-       val_dataset.dataset = copy.deepcopy(val_subset.dataset)
+       
 
        train_dataset.dataset.transform = train_transforms
 
