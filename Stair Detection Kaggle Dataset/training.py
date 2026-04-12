@@ -40,7 +40,7 @@ METRICS_GT_LABELS=5
 METRICS_SIZE=6
 
 train_transforms= transforms.Compose([
-    transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2),
+    #transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2),
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     
     ])
