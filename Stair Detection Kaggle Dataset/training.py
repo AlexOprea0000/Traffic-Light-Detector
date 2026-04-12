@@ -166,9 +166,16 @@ class TrainingApp:
        val_size= len(dataset) - train_size
        train_indices= indices[:train_size]
        val_indices= indices[train_size:]
+        
+       train_base = copy.copy(dataset)
+       val_base = copy.copy(dataset)
 
-       train_dataset=torch.utils.data.Subset(dataset, train_indices)
-       val_dataset=torch.utils.data.Subset(dataset, val_indices)
+       train_base.transform = train_transforms
+       val_base.transform = val_transforms
+       val_base.mode = 'val'
+
+       train_dataset=torch.utils.data.Subset(train_base, train_indices)
+       val_dataset=torch.utils.data.Subset(val_base, val_indices)
         
        
        batch_size = self.cli_args.batch_size
@@ -177,10 +184,7 @@ class TrainingApp:
 
        
 
-       train_dataset.dataset.transform = train_transforms
-
-       val_dataset.dataset.transform = val_transforms
-       val_dataset.dataset.mode = 'val'
+       
 
        train_loader= DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=self.cli_args.num_workers, collate_fn=collate_fn, pin_memory=self.use_cuda, drop_last=False)
        val_loader= DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=self.cli_args.num_workers, collate_fn=collate_fn, pin_memory=self.use_cuda, drop_last=False)
