@@ -161,7 +161,7 @@ class TrainingApp:
 
     def init_DL(self):
        dataset= TrafficLightDataset(dataset_path=base_path)
-
+       indices=torch.randperm(len(dataset)).tolist()
        train_size= int(0.8 * len(dataset))
        val_size= len(dataset) - train_size
        train_indices= indices[:train_size]
